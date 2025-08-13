@@ -27,7 +27,7 @@ import {
 } from '@mui/icons-material';
 import './ProviderLogin.css';
 
-const ProviderLogin = ({ onSwitchToRegister }) => {
+const ProviderLogin = ({ onSwitchToRegister, onLogin }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
@@ -129,9 +129,11 @@ const ProviderLogin = ({ onSwitchToRegister }) => {
         severity: 'success'
       });
       
-      // Simulate redirect
+      // Redirect to dashboard
       setTimeout(() => {
-        console.log('Redirecting to dashboard...');
+        if (onLogin) {
+          onLogin();
+        }
       }, 1500);
       
     } catch (error) {

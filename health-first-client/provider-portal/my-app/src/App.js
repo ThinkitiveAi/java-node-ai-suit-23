@@ -3,13 +3,14 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import ProviderLogin from './components/ProviderLogin';
 import ProviderRegistration from './components/ProviderRegistration';
+import ProviderDashboard from './components/ProviderDashboard';
 import './App.css';
 
 // Create a custom theme for the healthcare application
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#233853',
       light: '#42a5f5',
       dark: '#1565c0',
     },
@@ -17,7 +18,7 @@ const theme = createTheme({
       main: '#dc004e',
     },
     background: {
-      default: '#f5f5f5',
+      default: '#f3f3f3',
     },
   },
   typography: {
@@ -55,18 +56,43 @@ const theme = createTheme({
 });
 
 function App() {
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSwitchToLogin = () => setShowLogin(true);
   const handleSwitchToRegister = () => setShowLogin(false);
+  
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+  
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setShowLogin(true);
+  };
+
+  if (isLoggedIn) {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ProviderDashboard onLogout={handleLogout} />
+      </ThemeProvider>
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {showLogin ? (
-        <ProviderLogin onSwitchToRegister={handleSwitchToRegister} />
+        <ProviderLogin 
+          onSwitchToRegister={handleSwitchToRegister}
+          onLogin={handleLogin}
+        />
       ) : (
-        <ProviderRegistration onSwitchToLogin={handleSwitchToLogin} />
+        <ProviderRegistration 
+          onSwitchToLogin={handleSwitchToLogin}
+          onLogin={handleLogin}
+        />
       )}
     </ThemeProvider>
   );
