@@ -40,6 +40,7 @@ import {
   Business,
 } from '@mui/icons-material';
 import ProviderAvailability from './ProviderAvailability';
+import AppointmentManagement from './AppointmentManagement';
 
 const ProviderDashboard = ({ onLogout }) => {
   const theme = useTheme();
@@ -153,6 +154,8 @@ const ProviderDashboard = ({ onLogout }) => {
     switch (currentView) {
       case 'availability':
         return <ProviderAvailability />;
+      case 'scheduling':
+        return <AppointmentManagement />;
       case 'settings':
         return renderSettingsSubMenu();
       default:
